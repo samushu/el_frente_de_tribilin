@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EnfermiTrack — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Rubik:wght@400;500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../Css/Estilos.css" />
+  <link rel="stylesheet" href="../Css/Dashboard.css" />
+</head>
+<body class="app-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <img src="../Img/logo.png" alt="EnfermiTrack" class="sidebar__logo" />
+    </div>
+    <nav class="sidebar__nav">
+      <a href="#" class="sidebar__link active" data-view="dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="sidebar__link" data-view="empleados">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Empleados</span>
+      </a>
+      <a href="#" class="sidebar__link" data-view="incapacidades">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span>Incapacidades</span>
+      </a>
+      <a href="#" class="sidebar__link" data-view="seguimientos">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>Seguimientos</span>
+      </a>
+    </nav>
+    <div class="sidebar__footer">
+      <div class="sidebar__user">
+        <div class="sidebar__avatar" id="sidebarAvatar">U</div>
+        <div class="sidebar__user-info">
+          <span class="sidebar__user-name" id="sidebarUserName">Usuario</span>
+          <span class="sidebar__user-role" id="sidebarUserRole">—</span>
+        </div>
+      </div>
+      <button class="sidebar__logout" id="btnLogout" title="Cerrar sesión">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="app-main">
+    <header class="topbar">
+      <button class="topbar__menu" id="btnMenuMobile" aria-label="Abrir menú">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h1 class="topbar__title" id="topbarTitle">Dashboard</h1>
+      <div class="topbar__right">
+        <span class="topbar__badge" id="topbarUser"></span>
+      </div>
+    </header>
+
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- VISTA DASHBOARD -->
+    <section class="view" id="view-dashboard">
+      <div class="view__header">
+        <h2 class="view__title">Resumen general</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card stat-card--green">
+          <div class="stat-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="stat-card__body"><span class="stat-card__num" id="statTotalEmpleados">—</span><span class="stat-card__label">Total empleados</span></div>
+        </div>
+        <div class="stat-card stat-card--blue">
+          <div class="stat-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="stat-card__body"><span class="stat-card__num" id="statEmpleadosActivos">—</span><span class="stat-card__label">Empleados activos</span></div>
+        </div>
+        <div class="stat-card stat-card--yellow">
+          <div class="stat-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <div class="stat-card__body"><span class="stat-card__num" id="statTotalIncapacidades">—</span><span class="stat-card__label">Total incapacidades</span></div>
+        </div>
+        <div class="stat-card stat-card--red">
+          <div class="stat-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="stat-card__body"><span class="stat-card__num" id="statIncapacidadesPendientes">—</span><span class="stat-card__label">En revisión</span></div>
+        </div>
+      </div>
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card__header">
+            <h3 class="card__title">Últimas incapacidades</h3>
+            <a href="#" class="card__link" data-view="incapacidades">Ver todas</a>
+          </div>
+          <div class="table-wrap">
+            <table class="table" id="dashTableIncapacidades">
+              <thead><tr><th>Empleado ID</th><th>Tipo</th><th>Días</th><th>Estado</th></tr></thead>
+              <tbody><tr><td colspan="4" class="table__empty">Cargando…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__header">
+            <h3 class="card__title">Empleados recientes</h3>
+            <a href="#" class="card__link" data-view="empleados">Ver todos</a>
+          </div>
+          <div class="table-wrap">
+            <table class="table" id="dashTableEmpleados">
+              <thead><tr><th>Nombre</th><th>Cargo</th><th>Área</th><th>Estado</th></tr></thead>
+              <tbody><tr><td colspan="4" class="table__empty">Cargando…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA EMPLEADOS -->
+    <section class="view hidden" id="view-empleados">
+      <div class="view__header">
+        <h2 class="view__title">Empleados</h2>
+        <button class="btn btn--primary" id="btnNuevoEmpleado">+ Nuevo empleado</button>
+      </div>
+      <div class="filters-bar">
+        <input class="form-input filters-bar__search" type="text" id="filterEmpleadoNombre" placeholder="Buscar por nombre o documento…" />
+        <select class="form-input filters-bar__select" id="filterEmpleadoArea"><option value="">Todas las áreas</option></select>
+        <select class="form-input filters-bar__select" id="filterEmpleadoEstado">
+          <option value="">Todos los estados</option>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="table" id="tablaEmpleados">
+            <thead><tr><th>#</th><th>Nombre completo</th><th>Documento</th><th>Correo</th><th>Cargo</th><th>Área</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody><tr><td colspan="8" class="table__empty">Cargando empleados…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA INCAPACIDADES -->
+    <section class="view hidden" id="view-incapacidades">
+      <div class="view__header">
+        <h2 class="view__title">Incapacidades</h2>
+        <button class="btn btn--primary" id="btnNuevaIncapacidad">+ Nueva incapacidad</button>
+      </div>
+      <div class="filters-bar">
+        <select class="form-input filters-bar__select" id="filterIncapEstado">
+          <option value="">Todos los estados</option>
+          <option value="registrada">Registrada</option>
+          <option value="en_revision">En revisión</option>
+          <option value="aprobada">Aprobada</option>
+          <option value="rechazada">Rechazada</option>
+          <option value="finalizada">Finalizada</option>
+        </select>
+        <select class="form-input filters-bar__select" id="filterIncapTipo">
+          <option value="">Todos los tipos</option>
+          <option value="enfermedad_general">Enfermedad general</option>
+          <option value="accidente_laboral">Accidente laboral</option>
+          <option value="licencia_medica">Licencia médica</option>
+          <option value="incapacidad_temporal">Incapacidad temporal</option>
+        </select>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="table" id="tablaIncapacidades">
+            <thead><tr><th>#</th><th>Empleado ID</th><th>Tipo</th><th>Fecha inicio</th><th>Fecha fin</th><th>Días</th><th>Entidad</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody><tr><td colspan="9" class="table__empty">Cargando incapacidades…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA SEGUIMIENTOS -->
+    <section class="view hidden" id="view-seguimientos">
+      <div class="view__header">
+        <h2 class="view__title">Seguimientos</h2>
+        <button class="btn btn--primary" id="btnNuevoSeguimiento">+ Nuevo seguimiento</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="table" id="tablaSeguimientos">
+            <thead><tr><th>#</th><th>Incapacidad ID</th><th>Fecha</th><th>Comentario</th><th>Estado</th><th>Responsable</th><th>Acciones</th></tr></thead>
+            <tbody><tr><td colspan="7" class="table__empty">Cargando seguimientos…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal__header">
+        <h3 class="modal__title" id="modalTitle">Modal</h3>
+        <button class="modal__close" id="modalClose" aria-label="Cerrar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body" id="modalBody"></div>
+      <div class="modal__footer" id="modalFooter"></div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="../Js/Utils/Token.js"></script>
+  <script src="../Js/Utils/Helpers.js"></script>
+  <script src="../Js/Api/Auth.js"></script>
+  <script src="../Js/Api/Empleados.js"></script>
+  <script src="../Js/Api/Incapacidades.js"></script>
+  <script src="../Js/Api/Seguimiento.js"></script>
+  <script src="../Js/Ui/Tables.js"></script>
+  <script src="../Js/Ui/Forms.js"></script>
+  <script src="../Js/Ui/Dashboards.js"></script>
+</body>
+</html>
