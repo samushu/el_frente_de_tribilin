@@ -73,56 +73,28 @@
 .sidebar__link svg { flex-shrink: 0; }
 
 .sidebar__footer {
-  padding: var(--sp-4) var(--sp-4);
+  padding: var(--sp-4) var(--sp-3);
   border-top: 1px solid rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-}
-
-.sidebar__user { display: flex; align-items: center; gap: var(--sp-3); flex: 1; min-width: 0; }
-
-.sidebar__avatar {
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: var(--negro);
-  color: var(--blanco);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--text-base);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  text-transform: uppercase;
-}
-
-.sidebar__user-info { display: flex; flex-direction: column; min-width: 0; }
-
-.sidebar__user-name {
-  font-family: var(--font-ui);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--negro);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.sidebar__user-role {
-  font-family: var(--font-ui);
-  font-size: var(--text-xs);
-  color: rgba(0,0,0,0.5);
-  text-transform: capitalize;
 }
 
 .sidebar__logout {
-  color: rgba(0,0,0,0.4);
-  padding: var(--sp-2);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  padding: 0.65rem var(--sp-4);
   border-radius: var(--radius-sm);
-  display: flex; align-items: center;
-  transition: color var(--transition), background var(--transition);
-  flex-shrink: 0;
+  color: rgba(0,0,0,0.65);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: background var(--transition), color var(--transition);
+  cursor: pointer;
 }
-.sidebar__logout:hover { color: #c53030; background: rgba(197,48,48,0.1); }
+.sidebar__logout:hover {
+  background: rgba(0,0,0,0.08);
+  color: var(--negro);
+}
 
 /* ─── MAIN AREA ───────────────────────────────────────────────── */
 .app-main {
@@ -394,19 +366,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px; height: 32px;
+  gap: var(--sp-2);
+  height: 32px;
+  padding: 0 var(--sp-3);
   border-radius: var(--radius-sm);
-  font-size: var(--text-sm);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.03em;
   transition: background var(--transition), color var(--transition);
-  flex-shrink: 0;
+  white-space: nowrap;
 }
 
-.btn--edit  { background: rgba(66,153,225,.1); color: #2b6cb0; }
-.btn--edit:hover  { background: rgba(66,153,225,.22); }
-.btn--delete { background: rgba(252,129,129,.1); color: #c53030; }
-.btn--delete:hover { background: rgba(252,129,129,.22); }
-.btn--view  { background: rgba(126,217,87,.1); color: var(--verde-dark); }
-.btn--view:hover  { background: rgba(126,217,87,.22); }
+.btn--edit   { background: rgba(126,217,87,.15); color: var(--verde-dark); }
+.btn--edit:hover   { background: rgba(126,217,87,.3); }
+.btn--delete { background: rgba(17,17,17,.08); color: var(--negro); }
+.btn--delete:hover { background: rgba(17,17,17,.18); }
+.btn--view   { background: rgba(66,153,225,.1); color: #2b6cb0; }
+.btn--view:hover   { background: rgba(66,153,225,.22); }
 
 /* ─── MODAL ───────────────────────────────────────────────────── */
 .modal-backdrop {
@@ -530,7 +507,7 @@
   to   { opacity: 1; transform: none; }
 }
 
-/* RESPONSIVE  */
+/* ─── RESPONSIVE ──────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .dashboard-grid { grid-template-columns: 1fr; }
 }
