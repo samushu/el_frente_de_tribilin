@@ -369,9 +369,14 @@ const Forms = (() => {
       setLoadingBtn('btnGuardarInc', true);
       try {
         await IncapacidadesAPI.crear(payload);
-        Helpers.toast('Incapacidad registrada.', 'success');
+        // Actualizar estado del empleado a inactivo automáticamente
+        try {
+          await EmpleadosAPI.editar(parseInt(empleado_id), { estado: 'inactivo' });
+        } catch {}
+        Helpers.toast('Incapacidad registrada. Empleado marcado como inactivo.', 'success');
         cerrarModal();
         Tables.cargarIncapacidades();
+        Tables.cargarEmpleados();
       } catch (err) {
         fb.textContent = err.message;
         fb.className = 'form-feedback is-error';

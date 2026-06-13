@@ -33,37 +33,33 @@ function cargarDashboard() {
 /* ── Inicialización de la app ────────────────────────────────── */
 (async function initDashboard() {
 
-  // Validar token
+  // ── Validar token: si no existe, redirigir al login ─────────
   if (!Token.existe()) {
     window.location.href = '../Index.html';
     return;
   }
+
+  // ── Validar token contra el backend ─────────────────────────
+  // Si el backend no responde o el token es inválido → logout
   try {
     await AuthAPI.validarToken(Token.obtener());
-  } catch {
+  } catch (err) {
+    console.warn('Token inválido o servidor auth no disponible:', err.message);
     Token.borrar();
     window.location.href = '../Index.html';
     return;
   }
 
-  // Info de usuario
-  const user          = Token.obtenerUsuario();
-  const nombreUsuario = user.usuario || 'Usuario';
-  const rol           = user.rol || '—';
+  // ── Info usuario en topbar ──────────────────────────────────
 
-  document.getElementById('sidebarUserName').textContent = nombreUsuario;
-  document.getElementById('sidebarUserRole').textContent = rol;
-  document.getElementById('sidebarAvatar').textContent   = nombreUsuario.charAt(0).toUpperCase();
-  document.getElementById('topbarUser').textContent      = nombreUsuario;
-
-  // Logout
-  document.getElementById('btnLogout').addEventListener('click', async () => {
+  // ── Logout ───────────────────────────────────────────────────
+  document.getElementById('btnLogout')?.addEventListener('click', async () => {
     try { await AuthAPI.logout(Token.obtener()); } catch {}
     Token.borrar();
     window.location.href = '../Index.html';
   });
 
-  // Navegación entre vistas
+  // ── Navegación entre vistas ──────────────────────────────────
   const vistas = {
     dashboard:     { titulo: 'Dashboard',     carga: cargarDashboard },
     empleados:     { titulo: 'Empleados',     carga: () => Tables.cargarEmpleados() },
@@ -73,18 +69,25 @@ function cargarDashboard() {
 
   function navegarA(nombre) {
     if (!vistas[nombre]) return;
+    // Ocultar todas las vistas
     document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    // Mostrar la activa
     const viewEl = document.getElementById(`view-${nombre}`);
     if (viewEl) viewEl.classList.remove('hidden');
+    // Activar link sidebar
     document.querySelectorAll('.sidebar__link').forEach(l => {
       l.classList.toggle('active', l.dataset.view === nombre);
     });
-    document.getElementById('topbarTitle').textContent = vistas[nombre].titulo;
+    // Título topbar
+    const topbarTitle = document.getElementById('topbarTitle');
+    if (topbarTitle) topbarTitle.textContent = vistas[nombre].titulo;
+    // Cargar datos
     vistas[nombre].carga();
-    document.getElementById('sidebar').classList.remove('open');
+    // Cerrar sidebar mobile
+    document.getElementById('sidebar')?.classList.remove('open');
   }
 
-  // Clicks sidebar
+  // Clicks en sidebar
   document.querySelectorAll('.sidebar__link').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
@@ -124,9 +127,10 @@ function cargarDashboard() {
 
   // Menú mobile
   document.getElementById('btnMenuMobile')?.addEventListener('click', () => {
-    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar')?.classList.toggle('open');
   });
 
-  // Carga inicial
+  // ── Carga inicial ────────────────────────────────────────────
   navegarA('dashboard');
+
 })();
