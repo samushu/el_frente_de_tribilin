@@ -23,27 +23,40 @@
   </header>
 
   <!-- ════════════════════════════════ HERO ════════════════════════════════ -->
-
+  <!--
+    FOTOS NECESARIAS en carpeta Img/:
+      · hero-bg.jpg   → foto del señor (fondo completo del hero)
+      · abuela.png    → foto de la abuelita (tarjeta flotante derecha)
+    Reemplaza los src cuando tengas las imágenes listas.
+  -->
   <section class="hero">
+
+    <!-- Fondo: foto del señor -->
     <img
       src="Img/señortosiendo.jpg"
       alt=""
       class="hero__bg"
       aria-hidden="true"
     />
+
+    <!-- Overlay oscuro encima del fondo -->
     <div class="hero__overlay"></div>
 
+    <!-- Contenido izquierdo -->
     <div class="hero__content">
+      <p class="hero__eyebrow">Sistema de gestión médico-laboral</p>
       <h1 class="hero__title">
         Gestiona tus<br />
         trabajadores
       </h1>
       <p class="hero__sub">
-        Ten el <strong>CONTROL</strong> de cualquier<br />
-        imprevisto médico
+        Ten el <strong>CONTROL</strong> de cualquier imprevisto médico.<br />
+        Registra, aprueba y da seguimiento a incapacidades en un solo lugar.
       </p>
+      <a href="#login-section" class="btn btn--primary hero__cta">Acceder al sistema</a>
     </div>
 
+    <!-- Foto flotante: abuelita (esquina derecha) -->
     <div class="hero__float">
       <img
         src="Img/abuela.png"
@@ -115,12 +128,12 @@
     </div>
   </section>
 
-  <!-- FOOTER  -->
+  <!-- ══════════════════════════════ FOOTER ════════════════════════════════ -->
   <footer class="footer">
     <p>© 2026 EnfermiTrack · Sistema de gestión de incapacidades</p>
   </footer>
 
-  <!-- JS  -->
+  <!-- ════════════════════════════════ JS ══════════════════════════════════ -->
   <script src="Js/Utils/Token.js"></script>
   <script src="Js/Api/Auth.js"></script>
   <script src="Js/Main.js"></script>
