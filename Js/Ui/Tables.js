@@ -1,6 +1,6 @@
-/* ══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════
    Tables.js — Renderizado de tablas y filtros en el DOM
-═════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════════════════════ */
 
 const Tables = (() => {
 
@@ -27,10 +27,24 @@ const Tables = (() => {
           <div class="action-btns">
             <button class="btn btn--icon btn--edit" title="Editar"
               onclick="Forms.abrirEditarEmpleado(${emp.id})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
               Editar
             </button>
             <button class="btn btn--icon btn--delete" title="Eliminar"
               onclick="Forms.confirmarEliminarEmpleado(${emp.id}, '${(emp.nombres||'')+' '+(emp.apellidos||'')}')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                <path d="M10 11v6"/><path d="M14 11v6"/>
+                <path d="M9 6V4h6v2"/>
+              </svg>
               Eliminar
             </button>
           </div>
@@ -97,10 +111,24 @@ const Tables = (() => {
           <div class="action-btns">
             <button class="btn btn--icon btn--edit" title="Editar"
               onclick="Forms.abrirEditarIncapacidad(${inc.id})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
               Editar
             </button>
             <button class="btn btn--icon btn--delete" title="Eliminar"
               onclick="Forms.confirmarEliminarIncapacidad(${inc.id})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                <path d="M10 11v6"/><path d="M14 11v6"/>
+                <path d="M9 6V4h6v2"/>
+              </svg>
               Eliminar
             </button>
           </div>
@@ -127,12 +155,17 @@ const Tables = (() => {
   }
 
   function filtrarIncapacidades() {
-    const estado = (document.getElementById('filterIncapEstado')?.value || '').toLowerCase();
-    const tipo   = (document.getElementById('filterIncapTipo')?.value || '').toLowerCase();
+    const empleado = (document.getElementById('filterIncapEmpleado')?.value || '').trim();
+    const fecha    = (document.getElementById('filterIncapFecha')?.value || '');
+    const estado   = (document.getElementById('filterIncapEstado')?.value || '').toLowerCase();
+    const tipo     = (document.getElementById('filterIncapTipo')?.value || '').toLowerCase();
+
     const filtrados = _incapacidades.filter(inc => {
-      const matchEstado = !estado || (inc.estado||'').toLowerCase() === estado;
-      const matchTipo   = !tipo   || (inc.tipo||'').toLowerCase() === tipo;
-      return matchEstado && matchTipo;
+      const matchEmpleado = !empleado || String(inc.empleado_id || '').includes(empleado);
+      const matchFecha    = !fecha    || (inc.fecha_inicio || '').startsWith(fecha);
+      const matchEstado   = !estado   || (inc.estado || '').toLowerCase() === estado;
+      const matchTipo     = !tipo     || (inc.tipo   || '').toLowerCase() === tipo;
+      return matchEmpleado && matchFecha && matchEstado && matchTipo;
     });
     renderIncapacidades(filtrados);
   }
@@ -159,10 +192,19 @@ const Tables = (() => {
           <div class="action-btns">
             <button class="btn btn--icon btn--edit" title="Editar"
               onclick="Forms.abrirEditarSeguimiento(${seg.id})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
               Editar
             </button>
             <button class="btn btn--icon btn--delete" title="Eliminar"
               onclick="Forms.confirmarEliminarSeguimiento(${seg.id})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 5 6 21 6"/>
                 <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
                 <path d="M10 11v6"/><path d="M14 11v6"/>
@@ -226,6 +268,19 @@ const Tables = (() => {
     `).join('');
   }
 
+  function filtrarSeguimientos() {
+    const incapacidad = (document.getElementById('filterSegEmpleado')?.value || '').trim();
+    const fecha       = (document.getElementById('filterSegFecha')?.value || '');
+    const estado      = (document.getElementById('filterSegEstado')?.value || '').toLowerCase();
+
+    const filtrados = _seguimientos.filter(seg => {
+      const matchInc    = !incapacidad || String(seg.incapacidad_id || '').includes(incapacidad);
+      const matchFecha  = !fecha       || (seg.fecha || '').startsWith(fecha);
+      const matchEstado = !estado      || (seg.estado || '').toLowerCase() === estado;
+      return matchInc && matchFecha && matchEstado;
+    });
+    renderSeguimientos(filtrados);
+  }
   function getEmpleados()     { return _empleados; }
   function getIncapacidades() { return _incapacidades; }
   function getSeguimientos()  { return _seguimientos; }
@@ -233,7 +288,7 @@ const Tables = (() => {
   return {
     cargarEmpleados, filtrarEmpleados, renderEmpleados,
     cargarIncapacidades, filtrarIncapacidades, renderIncapacidades,
-    cargarSeguimientos, renderSeguimientos,
+    cargarSeguimientos, filtrarSeguimientos, renderSeguimientos,
     renderDashEmpleados, renderDashIncapacidades,
     getEmpleados, getIncapacidades, getSeguimientos
   };

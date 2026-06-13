@@ -1,6 +1,6 @@
-/* ══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════
    Dashboards.js — Navegación, stats y sesión
-═════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════════════════════ */
 
 const Dashboards = (() => {
   function actualizarStatsEmpleados(lista) {
@@ -117,8 +117,15 @@ function cargarDashboard() {
   document.getElementById('filterEmpleadoEstado')?.addEventListener('change', () => Tables.filtrarEmpleados());
 
   // Filtros incapacidades
-  document.getElementById('filterIncapEstado')?.addEventListener('change', () => Tables.filtrarIncapacidades());
-  document.getElementById('filterIncapTipo')?.addEventListener('change',   () => Tables.filtrarIncapacidades());
+  document.getElementById('filterIncapEmpleado')?.addEventListener('input',  () => Tables.filtrarIncapacidades());
+  document.getElementById('filterIncapFecha')?.addEventListener('change',    () => Tables.filtrarIncapacidades());
+  document.getElementById('filterIncapEstado')?.addEventListener('change',   () => Tables.filtrarIncapacidades());
+  document.getElementById('filterIncapTipo')?.addEventListener('change',     () => Tables.filtrarIncapacidades());
+
+  // Filtros seguimientos
+  document.getElementById('filterSegEmpleado')?.addEventListener('input',  () => Tables.filtrarSeguimientos());
+  document.getElementById('filterSegFecha')?.addEventListener('change',    () => Tables.filtrarSeguimientos());
+  document.getElementById('filterSegEstado')?.addEventListener('change',   () => Tables.filtrarSeguimientos());
 
   // Modal
   document.getElementById('modalClose')?.addEventListener('click', () => Forms.cerrarModal());

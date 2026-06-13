@@ -242,7 +242,7 @@ const Forms = (() => {
         </div>
         <div class="form-group">
           <label class="form-label">Días de incapacidad</label>
-          <input class="form-input" id="inc_dias" type="number" readonly placeholder="Se calcula automáticamente" style="background:#f4f4f4;cursor:default" />
+          <input class="form-input" id="inc_dias" type="number" readonly placeholder="Se calcula automáticamente" class="form-input--readonly" />
         </div>
         <div class="form-group">
           <label class="form-label" for="inc_entidad_medica">Entidad médica *</label>
@@ -303,7 +303,7 @@ const Forms = (() => {
           </div>
           <div class="form-group">
             <label class="form-label">Días</label>
-            <input class="form-input" id="inc_dias" type="number" value="${inc.dias_incapacidad || ''}" readonly style="background:#f4f4f4;cursor:default" />
+            <input class="form-input" id="inc_dias" type="number" value="${inc.dias_incapacidad || ''}" readonly class="form-input--readonly" />
           </div>
           <div id="formIncFeedback" class="form-feedback"></div>
         </form>`;

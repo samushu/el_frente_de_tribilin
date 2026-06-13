@@ -534,3 +534,9 @@
   .app-content { padding: var(--sp-4); }
   .form-row { grid-template-columns: 1fr; }
 }
+
+.input-readonly {
+  background: #f4f4f4 !important;
+  cursor: default;
+  pointer-events: none;
+}

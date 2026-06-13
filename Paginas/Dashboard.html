@@ -12,7 +12,7 @@
 </head>
 <body class="app-body">
 
-  <!-- ═════════════ NAVBAR ═══════════════ -->
+  <!-- ══════════════════════════ NAVBAR ══════════════════════════ -->
   <header class="app-navbar">
     <!-- Logo siempre visible -->
     <div class="app-navbar__brand">
@@ -155,6 +155,8 @@
         <button class="btn btn--primary" id="btnNuevaIncapacidad">+ Nueva incapacidad</button>
       </div>
       <div class="filters-bar">
+        <input class="form-input filters-bar__search" type="text" id="filterIncapEmpleado" placeholder="Buscar por ID de empleado…" />
+        <input class="form-input filters-bar__search" type="date" id="filterIncapFecha" title="Filtrar por fecha inicio" />
         <select class="form-input filters-bar__select" id="filterIncapEstado">
           <option value="">Todos los estados</option>
           <option value="registrada">Registrada</option>
@@ -186,6 +188,19 @@
       <div class="view__header">
         <h2 class="view__title">Seguimientos</h2>
         <button class="btn btn--primary" id="btnNuevoSeguimiento">+ Nuevo seguimiento</button>
+      </div>
+      <div class="filters-bar">
+        <input class="form-input filters-bar__search" type="text" id="filterSegEmpleado" placeholder="Buscar por ID de incapacidad…" />
+        <input class="form-input filters-bar__search" type="date" id="filterSegFecha" title="Filtrar por fecha" />
+        <select class="form-input filters-bar__select" id="filterSegEstado">
+          <option value="">Todos los estados</option>
+          <option value="registrada">Registrada</option>
+          <option value="en_revision">En revisión</option>
+          <option value="aprobada">Aprobada</option>
+          <option value="rechazada">Rechazada</option>
+          <option value="finalizada">Finalizada</option>
+          <option value="cerrado">Cerrado</option>
+        </select>
       </div>
       <div class="card">
         <div class="table-wrap">
