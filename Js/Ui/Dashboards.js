@@ -1,8 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
-   Dashboards.js — Navegación entre vistas, stats y sesión
+   Dashboards.js — Navegación, stats y sesión
 ═══════════════════════════════════════════════════════════════ */
 
-/* ── Stats del dashboard (declarado primero) ─────────────────── */
 const Dashboards = (() => {
   function actualizarStatsEmpleados(lista) {
     const total   = lista.length;
@@ -30,36 +29,19 @@ function cargarDashboard() {
   Tables.cargarIncapacidades();
 }
 
-/* ── Inicialización de la app ────────────────────────────────── */
 (async function initDashboard() {
 
-  // ── Validar token: si no existe, redirigir al login ─────────
-  if (!Token.existe()) {
-    window.location.href = '../Index.html';
-    return;
-  }
-
-  // ── Validar token contra el backend ─────────────────────────
-  // Si el backend no responde o el token es inválido → logout
+  // Validar sesión
+  if (!Token.existe()) { window.location.href = '../Index.html'; return; }
   try {
     await AuthAPI.validarToken(Token.obtener());
-  } catch (err) {
-    console.warn('Token inválido o servidor auth no disponible:', err.message);
+  } catch {
     Token.borrar();
     window.location.href = '../Index.html';
     return;
   }
 
-  // ── Info usuario en topbar ──────────────────────────────────
-
-  // ── Logout ───────────────────────────────────────────────────
-  document.getElementById('btnLogout')?.addEventListener('click', async () => {
-    try { await AuthAPI.logout(Token.obtener()); } catch {}
-    Token.borrar();
-    window.location.href = '../Index.html';
-  });
-
-  // ── Navegación entre vistas ──────────────────────────────────
+  // ── Navegación ───────────────────────────────────────────────
   const vistas = {
     dashboard:     { titulo: 'Dashboard',     carga: cargarDashboard },
     empleados:     { titulo: 'Empleados',     carga: () => Tables.cargarEmpleados() },
@@ -67,28 +49,27 @@ function cargarDashboard() {
     seguimientos:  { titulo: 'Seguimientos',  carga: () => Tables.cargarSeguimientos() }
   };
 
-  function navegarA(nombre) {
-    if (!vistas[nombre]) return;
-    // Ocultar todas las vistas
-    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
-    // Mostrar la activa
-    const viewEl = document.getElementById(`view-${nombre}`);
-    if (viewEl) viewEl.classList.remove('hidden');
-    // Activar link sidebar
-    document.querySelectorAll('.sidebar__link').forEach(l => {
+  function setLinksActivos(nombre) {
+    document.querySelectorAll('.app-navbar__link, .app-dropdown__link').forEach(l => {
       l.classList.toggle('active', l.dataset.view === nombre);
     });
-    // Título topbar
-    const topbarTitle = document.getElementById('topbarTitle');
-    if (topbarTitle) topbarTitle.textContent = vistas[nombre].titulo;
-    // Cargar datos
-    vistas[nombre].carga();
-    // Cerrar sidebar mobile
-    document.getElementById('sidebar')?.classList.remove('open');
   }
 
-  // Clicks en sidebar
-  document.querySelectorAll('.sidebar__link').forEach(link => {
+  function cerrarDropdown() {
+    document.getElementById('appDropdown')?.classList.add('hidden');
+  }
+
+  function navegarA(nombre) {
+    if (!vistas[nombre]) return;
+    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    document.getElementById(`view-${nombre}`)?.classList.remove('hidden');
+    setLinksActivos(nombre);
+    vistas[nombre].carga();
+    cerrarDropdown();
+  }
+
+  // Links navbar y dropdown
+  document.querySelectorAll('.app-navbar__link, .app-dropdown__link').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
       navegarA(link.dataset.view);
@@ -97,15 +78,35 @@ function cargarDashboard() {
 
   // Links "ver todos" del dashboard
   document.querySelectorAll('[data-view]').forEach(el => {
-    if (!el.classList.contains('sidebar__link')) {
-      el.addEventListener('click', e => {
-        e.preventDefault();
-        navegarA(el.dataset.view);
-      });
+    if (!el.classList.contains('app-navbar__link') && !el.classList.contains('app-dropdown__link')) {
+      el.addEventListener('click', e => { e.preventDefault(); navegarA(el.dataset.view); });
     }
   });
 
-  // Botones "nuevo"
+  // Hamburguesa
+  document.getElementById('btnHamburger')?.addEventListener('click', () => {
+    document.getElementById('appDropdown')?.classList.toggle('hidden');
+  });
+
+  // Cerrar dropdown al hacer click fuera
+  document.addEventListener('click', e => {
+    const dropdown   = document.getElementById('appDropdown');
+    const hamburger  = document.getElementById('btnHamburger');
+    if (dropdown && !dropdown.contains(e.target) && !hamburger.contains(e.target)) {
+      cerrarDropdown();
+    }
+  });
+
+  // Logout
+  async function hacerLogout() {
+    try { await AuthAPI.logout(Token.obtener()); } catch {}
+    Token.borrar();
+    window.location.href = '../Index.html';
+  }
+  document.getElementById('btnLogout')?.addEventListener('click', hacerLogout);
+  document.getElementById('btnLogoutMobile')?.addEventListener('click', hacerLogout);
+
+  // Botones nuevo
   document.getElementById('btnNuevoEmpleado')?.addEventListener('click',    () => Forms.abrirCrearEmpleado());
   document.getElementById('btnNuevaIncapacidad')?.addEventListener('click', () => Forms.abrirCrearIncapacidad());
   document.getElementById('btnNuevoSeguimiento')?.addEventListener('click', () => Forms.abrirCrearSeguimiento());
@@ -119,18 +120,12 @@ function cargarDashboard() {
   document.getElementById('filterIncapEstado')?.addEventListener('change', () => Tables.filtrarIncapacidades());
   document.getElementById('filterIncapTipo')?.addEventListener('change',   () => Tables.filtrarIncapacidades());
 
-  // Cerrar modal
+  // Modal
   document.getElementById('modalClose')?.addEventListener('click', () => Forms.cerrarModal());
   document.getElementById('modalBackdrop')?.addEventListener('click', e => {
     if (e.target.id === 'modalBackdrop') Forms.cerrarModal();
   });
 
-  // Menú mobile
-  document.getElementById('btnMenuMobile')?.addEventListener('click', () => {
-    document.getElementById('sidebar')?.classList.toggle('open');
-  });
-
-  // ── Carga inicial ────────────────────────────────────────────
+  // Carga inicial
   navegarA('dashboard');
-
 })();
