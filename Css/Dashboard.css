@@ -377,7 +377,7 @@
 .badge--finalizada  { background: rgba(160,160,160,.15); color: #555; }
 .badge--cerrado     { background: rgba(160,160,160,.15); color: #555; }
 
-/* ─── BOTONES DE ACCIÓN ───────────────────────────────────────── */
+/* ─── BOTONES DE ACCIÓN ───── */
 .action-btns { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
 
 .btn--icon {
